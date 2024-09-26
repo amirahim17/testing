@@ -67,7 +67,6 @@
             fetch(scriptURL, {
                 method: 'POST',
                 body: new FormData(form),
-                mode: 'no-cors' // This allows the request to go through without CORS restrictions
             })
             .then(() => {
                 alert('Login successful! Data sent to Google Sheets.');
