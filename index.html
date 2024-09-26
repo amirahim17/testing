@@ -61,23 +61,29 @@
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyZMgg7jz5bVkKjK7dMoQTfdmF7FvrjLIGOxD4vVQ-VVzr37jylRQXsoumfSnCo8un1VQ/exec'; // Replace this with your real Google Apps Script Web App URL
         const form = document.getElementById('loginForm');
-    
+
+
         form.addEventListener('submit', e => {
-            e.preventDefault();
-            fetch(scriptURL, {
-                method: 'POST',
-                body: new FormData(form),
-            })
-            .then(() => {
+        e.preventDefault();
+        fetch(scriptURL, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(response => response.json())  // Parse JSON response
+        .then(data => {
+            if (data.result === 'success') {
                 alert('Login successful! Data sent to Google Sheets.');
-                form.reset(); // Reset the form after submission
-            })
-            .catch(error => console.error('Error!', error.message));
-        });
+                form.reset();
+            } else {
+                alert(data.message || 'An error occurred!');
+            }
+        })
+        .catch(error => console.error('Error!', error.message));
+    });
     </script>
     
-    
-    
-
 </body>
 </html>
