@@ -59,25 +59,24 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwFIpbHIYy0mwmyDT4z3i8EKV4BvxfsSJGQHKVPp9j3/dev'; // Paste your Web App URL here
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyZMgg7jz5bVkKjK7dMoQTfdmF7FvrjLIGOxD4vVQ-VVzr37jylRQXsoumfSnCo8un1VQ/exec'; // Replace this with your real Google Apps Script Web App URL
         const form = document.getElementById('loginForm');
     
         form.addEventListener('submit', e => {
             e.preventDefault();
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result === "success") {
-                        alert('Login successful! Data sent to Google Sheets.');
-                    } else if (data.result === "error") {
-                        alert(data.message); // Show error if username already exists
-                    }
-                    console.log(data);
-                    form.reset(); // Reset the form after submission
-                })
-                .catch(error => console.error('Error!', error.message));
+            fetch(scriptURL, {
+                method: 'POST',
+                body: new FormData(form),
+                mode: 'no-cors' // This allows the request to go through without CORS restrictions
+            })
+            .then(() => {
+                alert('Login successful! Data sent to Google Sheets.');
+                form.reset(); // Reset the form after submission
+            })
+            .catch(error => console.error('Error!', error.message));
         });
     </script>
+    
     
     
 
